@@ -73,6 +73,7 @@
 	html {
 		/*overflow: hidden;*/
 		overflow: scroll;
+		
 		scroll-snap-type: y mandatory;
 		
 	}
