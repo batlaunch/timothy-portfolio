@@ -61,6 +61,9 @@
 		display: flex;
 		overflow: hidden;
 		transition: 800ms;
+		
+		scroll-snap-align: center;
+		
 	}
 	
 	
@@ -74,7 +77,7 @@
 	
 	.project:not(.selected) {
 		opacity: 30%;
-		transform: scale(0.95);
+		transform: scale(0.9);
 	}
 	
 	button.common {

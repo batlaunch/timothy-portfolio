@@ -42,6 +42,9 @@
 		<ProjectView :image-src="EarthImage" :selected="selectedIndex === 1">
 			Project 2
 		</ProjectView>
+		<ProjectView :image-src="EarthImage" :selected="selectedIndex === 2">
+			Project 2
+		</ProjectView>
 	</div>
 
 

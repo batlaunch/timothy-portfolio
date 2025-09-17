@@ -67,6 +67,16 @@
 		font-weight: 400;
 	}
 	
+	body {
+	}
+	
+	html {
+		/*overflow: hidden;*/
+		overflow: scroll;
+		scroll-snap-type: y mandatory;
+		
+	}
+	
 	button {
 		font-family: 'Inter'
 	}
