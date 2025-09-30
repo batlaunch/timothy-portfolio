@@ -67,12 +67,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: 16px;
+		border-radius: 32px;
 		/*background-color: rgba(0,0,0,1);*/
 		
 		aspect-ratio: 16/10;
 		/*border: 1px solid var(--primary-color-20);*/
-		/*box-shadow: 0 10px 200px var(--primary-color-20);*/
 		/*background: var(--primary-color-5);*/
 		/*box-shadow: inset 0 0 20px var(--primary-color-20);*/
 		position: relative;
@@ -100,6 +99,11 @@
 	.project:not(.selected) {
 		opacity: 30%;
 		transform: scale(0.9);
+	}
+	
+	.project.selected {
+		box-shadow: 0 10px 300px var(--primary-color-20);
+		
 	}
 	
 	button.common {
