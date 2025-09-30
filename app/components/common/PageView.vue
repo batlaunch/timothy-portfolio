@@ -1,62 +1,97 @@
 <script setup lang="ts">
-	import CloseIcon from '~/components/common/CloseIcon.vue'
-	
-	defineProps<{
-		page?: boolean
-	}>()
+	import CloseIcon from '~/components/common/icons/CloseIcon.vue'
 	
 	const store = useStore()
 </script>
 
 <template>
-	<main id="main">
-		<nav id="side-bar">
-			<div class="side-bar-inner">
-				<slot name="side"/>
-			</div>
-		</nav>
-		<div class="project-list">
-			<slot name="content"/>
-			<button v-if="page" class="exit-button" @click="store.currentProject = null">
+	<section class="page-view">
+		<div class="page-inner">
+			<article class="article">
+				<div class="header">
+					<p class="project-number">
+						<slot name="project"/>
+					</p>
+					<h1 class="title">
+						<slot name="title"/>
+					</h1>
+<!--					<p class="date">-->
+<!--						<slot name="date"/>-->
+<!--					</p>-->
+				</div>
+				
+				<slot/>
+			</article>
+			
+			<button class="exit-button" @click="store.currentProject = null">
 				<CloseIcon/>
 			</button>
 		</div>
+		
+
+		
+		
 		<!--	  <div id="gradient"></div>-->
-	</main>
+	</section>
 
 </template>
 
 <style scoped>
-	.project-list {
-		flex: 1 1 900px;
-		padding: 64px 48px;
+	.title {
+		font-size: 2.25rem;
+	}
+	
+	.page-view {
+		overflow-y: scroll;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		/*flex-direction: column;*/
+		justify-content: center;
+	}
+	
+	.project-number {
+		text-transform: uppercase;
+		margin-bottom: 8px;
+		font-size: 14px;
+		color: var(--neutral-60);
+		font-weight: 600;
+		letter-spacing: 0.02rem;
+	}
+	
+	.header {
+		margin-bottom: 32px;
+	}
+	
+	.date {
+		margin-top: 16px;
+	}
+	
+	p {
+		color: var(--neutral-80);
+		letter-spacing: 0.03rem;
+	}
+	
+	.page-inner {
+		max-width: 1280px;
+		padding: 0 32px;
 		box-sizing: border-box;
+		flex: 1 1 800px;
 		position: relative;
+		display: flex;
+		justify-content: center;
 	}
 	
-	#side-bar {
-		/*background: var(--lifted-color);*/
-		height: 100%;
+	.article {
+		max-width: 800px;
+		flex: 1 1 800px;
+		margin: 96px 0;
 		display: flex;
 		flex-direction: column;
-		align-items: flex-end;
-		/*Adds up to 1280px*/
-		flex: 1 0 380px;
-	}
-	
-	.side-bar-inner {
-		padding: 112px 48px 48px 48px;
-		display: flex;
-		width: 380px;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: flex-start;
-		box-sizing: border-box;
-		height: 100%;
-		position: fixed;
-		top: 0;
+		gap: 32px;
 		
 	}
+	
 	
 	.exit-button {
 		border: none;
