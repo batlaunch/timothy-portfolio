@@ -103,6 +103,7 @@
 	
 	.project.selected {
 		box-shadow: 0 10px 300px var(--primary-color-20);
+		/*border-radius: 1px solid var(--border-color);*/
 		
 	}
 	

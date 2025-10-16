@@ -9,23 +9,30 @@
 		<div class="page-inner">
 			<article class="article">
 				<div class="header">
-					<p class="project-number">
-						<slot name="project"/>
-					</p>
-					<h1 class="title">
-						<slot name="title"/>
-					</h1>
-<!--					<p class="date">-->
-<!--						<slot name="date"/>-->
-<!--					</p>-->
+					<div class="header-side">
+						<p class="project-number">
+							<slot name="project"/>
+						</p>
+						<h1 class="title">
+							<slot name="title"/>
+						</h1>
+						<!--					<p class="date">-->
+						<!--						<slot name="date"/>-->
+						<!--					</p>-->
+
+					</div>
+					<div class="header-side">
+						<button class="exit-button" @click="store.currentProject = null">
+							<CloseIcon/>
+						</button>
+					</div>
+					
 				</div>
 				
 				<slot/>
 			</article>
 			
-			<button class="exit-button" @click="store.currentProject = null">
-				<CloseIcon/>
-			</button>
+
 		</div>
 		
 
@@ -60,6 +67,8 @@
 	}
 	
 	.header {
+		display: flex;
+		justify-content: space-between;
 		margin-bottom: 32px;
 	}
 	
@@ -101,7 +110,7 @@
 		width: 48px;
 		height: 48px;
 		cursor: pointer;
-		position: absolute;
+		/*position: absolute;*/
 		right: 0;
 		top: 64px;
 		display: flex;
