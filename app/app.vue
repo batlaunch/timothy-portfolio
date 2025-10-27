@@ -26,7 +26,7 @@
 	import BallTexturesImage from '~/images/proj3/textures.png'
 	import BallSceneImage from '~/images/proj3/scene.png'
 	import BallLightingImage from '~/images/proj3/lighting.png'
-	import BallVideo from '~/images/proj3/ball_animation_30.mp4'
+	import BallVideo from '~/images/proj3/ball_animation_30_1.mp4'
 	
 	
 
@@ -231,9 +231,11 @@
 		--border-color: rgba(255, 255, 255, 0.1);
 		--hover-color: rgba(255, 255, 255, 0.05);
 		
-		--primary-color: rgba(237, 167, 0, 1);
-		--primary-color-20: rgba(237, 167, 0, 0.2);
-		--primary-color-5: rgba(237, 167, 0, 0.05);
+		--primary-color-values: 237,167,0;
+		/*--primary-color-values: 56, 59, 252;*/
+		--primary-color: rgba(var(--primary-color-values), 1);
+		--primary-color-20: rgba(var(--primary-color-values), 0.2);
+		--primary-color-5: rgba(var(--primary-color-values), 0.05);
 	}
 	
 	h1, h2, h3, h4, h5, h6 {

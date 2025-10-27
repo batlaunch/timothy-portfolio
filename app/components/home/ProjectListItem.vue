@@ -109,7 +109,7 @@
 	
 	button.common {
 		border: none;
-		background-color: var(--primary-color);
+		background-color: rgba(var(--primary-color-values), 0.8);
 		padding: 16px 24px;
 		border-radius: 100px;
 		cursor: pointer;
@@ -120,6 +120,12 @@
 		align-items: center;
 		gap: 8px;
 		transition: 250ms;
+		/*color: white;*/
+		/*border: 1px solid rgba(255,255,255,0.2);*/
+		box-shadow: inset 1px 1px 0px rgba(255,255,255,0.3),
+		inset -1px -1px 0px rgba(0, 0, 0, 0.3),
+	inset 0 0 8px rgba(255,255,255,0.3);
+		backdrop-filter: blur(8px);
 	}
 	
 	button.common:hover {
