@@ -5,8 +5,6 @@
 	import PageSection from '~/components/common/PageSection.vue'
 	import PageVideo from '~/components/common/PageVideo.vue'
 	
-	const store = useStore()
-	
 	import Original from '~/images/proj2/original.webp'
 	import Model1 from '~/images/proj2/Modeling.png'
 	import Model2 from '~/images/proj2/Rivets.png'
@@ -18,6 +16,8 @@
 	import TreasureImage from '~/images/proj2/chest2.jpg'
 	
 	import BallSpiderverseImage from '~/images/proj3/spiderverse.jpg'
+	
+	const store = useStore()
 	import BallStoryboardImage from '~/images/proj3/storyboard.jpg'
 	import BallRiggingImage from '~/images/proj3/rigging.png'
 	import BallAnimationImage from '~/images/proj3/animation.png'
@@ -68,22 +68,22 @@
 					<template #title>Reference Image</template>
 					This is the reference treasure chest I used
 					
-					<PageImage :imageSrc="Original"/>
+					<PageImage :image-src="Original"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Modeling</template>
 					To model the chest, I used separate geometry for each piece. I created the frame first using
 					primitives,
 					then added details such as creating rivets and adding bevels.
-					<PageImage :imageSrc="Model1"/>
-					<PageImage :imageSrc="Model2"/>
+					<PageImage :image-src="Model1"/>
+					<PageImage :image-src="Model2"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Coins</template>
 					To model the coins, MASH to simulate the coins falling. Then I baked the simulation at the final
 					frame
 					into geometry. I found a texture for them online.
-					<PageImage :imageSrc="Coins"/>
+					<PageImage :image-src="Coins"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Texturing</template>
@@ -91,20 +91,20 @@
 					and normal
 					in Hypershade. For the metal, I adjusted values in the AIStandardSurface and added a grunge map to
 					the roughness.
-					<PageImage :imageSrc="Material1"/>
-					<PageImage :imageSrc="Material2"/>
+					<PageImage :image-src="Material1"/>
+					<PageImage :image-src="Material2"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Lighting</template>
 					For the lighting, I used three lights, one behind, one overhead, and one inside the chest. I altered
 					the colors
 					to match the reference image as best I could. I also added some atmosphere to add some depth.
-					<PageImage :imageSrc="Lighting"/>
+					<PageImage :image-src="Lighting"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Final Result</template>
-					<PageVideo :videoSrc="TreasureVideo"/>
-					<PageImage :imageSrc="TreasureImage"/>
+					<PageVideo :video-src="TreasureVideo"/>
+					<PageImage :image-src="TreasureImage"/>
 				</PageSection>
 			</PageView>
 			<PageView v-else-if="store.currentProject === 'ball-animation'">
@@ -114,43 +114,65 @@
 				
 				<PageSection>
 					<template #title>Inspiration</template>
-					I wanted the style of my animation to be similar to the movie Spider-Man: Into the Spider-Verse
+					I wanted the style of my animation to be similar to the movie Spider-Man: Into the Spider-Verse.
+					I watched some videos on how they animated the movie and incorporated a few things into my animation,
+					including animating on twos, dotted halftones, RGB glitch effects, and just the overall style
+					and color theme of the movie (specifically the What's Up Danger scene!).
 					
-					<PageImage :imageSrc="BallSpiderverseImage"/>
+					<PageImage :image-src="BallSpiderverseImage"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Storyboard</template>
-<!--					I used a lattice with control points to control the squash and stretch of the ball-->
-					I wanted to animate a ball bouncing on top of buildings with the same aesthetic as the movie
-					<PageImage :imageSrc="BallStoryboardImage"/>
-				</PageSection>				<PageSection>
+					I wanted to animate a ball bouncing on top of buildings with the same aesthetic as the movie.
+					<br><br>
+					After my presentation, I added more time to my animation created a "plot", so I
+					made a new storyboard with an extra scene and a portal.
+					<PageImage :image-src="BallStoryboardImage"/>
+				</PageSection>				
+				<PageSection>
 					<template #title>Rigging</template>
-					I used a lattice with control points to control the squash and stretch of the ball
-					<PageImage :imageSrc="BallRiggingImage"/>
+					I used a lattice with control points to control the squash and stretch of the ball. This
+					gave me full control over things such as the rotation of the squash and stretch.
+					<PageImage :image-src="BallRiggingImage"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Animation</template>
-					I animated the ball with pose to pose and learned how to use a motion path to watch the mo
-					<PageImage :imageSrc="BallAnimationImage2"/>
-					<PageImage :imageSrc="BallAnimationImage"/>
+					I animated the ball with pose to pose and learned how to use a motion path to see
+					the path of the keyframes. The animators in Into the Spider-Verse animated the characters
+					on twos, so attempted doing that. I manually created step keyframes every other frame
+					so the ball "paused" after each frame of movement.
+					<br><br>
+					I animated the cameras on ones so the camera movement was smooth but the character (the ball)
+					movement was choppy.
+					<PageImage :image-src="BallAnimationImage2"/>
+					<PageImage :image-src="BallAnimationImage"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Texturing</template>
-					For the buildings, I found a blocky texture online and combined it with the emission color for the lights,
-					and scaled up the same texture for the emission level
-					<PageImage :imageSrc="BallTextureImage"/>
-					<PageImage :imageSrc="BallTexturesImage"/>
+					For the buildings lights, I found a blocky texture online and combined it with the emission color for the lights,
+					and scaled up the same texture for the emission level. For the other materials in the buildings,
+					I created a glass texture that sat on geometry just outside of the lights, and an aiToon texture for
+					the shell. The silhouette buildings are just stretched cubes with an aiToon texture.
+					<br><br>
+					Into the Spider-Verse has dotted highlights and shadows which adds to the comic book style. I attempted
+					to create my own in Maya with ball by using a shader I found online for the dots combined with an
+					aiToon shader. The results weren't that impressive, so I added some dotted highlights in After Effects.
+					<br><br>
+					For the portal, I used aiToonShaders with high emission, and added glitch effects in After Effects.
+					<PageImage :image-src="BallTextureImage"/>
+					<PageImage :image-src="BallTexturesImage"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Lighting and Scene</template>
-					For the lighting, I used a few main lights and set up additional lights for each shot. I used a lot of cubes
-					to create the background of the city.
-					<PageImage :imageSrc="BallLightingImage"/>
-					<PageImage :imageSrc="BallSceneImage"/>
+					For the lighting, I used a few main lights and set up additional lights for each shot. I laid out my
+					buildings (lit and silhouette) based on my camera positions. I ended up spending a lot of time tweaking
+					all the building positions and shot-specific lights to get the shots I wanted.
+					<PageImage :image-src="BallLightingImage"/>
+					<PageImage :image-src="BallSceneImage"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Final Result</template>
-					<PageVideo :videoSrc="BallVideo"/>
+					<PageVideo :video-src="BallVideo"/>
 				</PageSection>
 			</PageView>
 			

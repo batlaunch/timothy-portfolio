@@ -3,7 +3,7 @@
 	import ProjectListItemView from '~/components/home/ProjectListItem.vue'
 	import EarthVideo from '~/images/proj1/solar_export.mp4'
 	import ChestVideo from '~/images/proj2/chest.mp4'
-	import BallVideo from '~/images/proj3/ball_animation_30.mp4'
+	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
 	const projectListEl = useTemplateRef('projectListEl')
 	const observerThreshold = useTemplateRef('observerThreshold')
