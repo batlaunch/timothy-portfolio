@@ -26,7 +26,7 @@
 	import BallTexturesImage from '~/images/proj3/textures.png'
 	import BallSceneImage from '~/images/proj3/scene.png'
 	import BallLightingImage from '~/images/proj3/lighting.png'
-	import BallVideo from '~/images/proj3/ball_animation_30_1.mp4'
+	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
 	
 
