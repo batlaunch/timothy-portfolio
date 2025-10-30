@@ -5,6 +5,17 @@
 	import PageSection from '~/components/common/PageSection.vue'
 	import PageVideo from '~/components/common/PageVideo.vue'
 	
+	import PlanetOriginal from '~/images/proj1/first_export_1.mov'
+	import GraphEditor from '~/images/proj1/graph_editor.png'
+	import ExpressionEditor from '~/images/proj1/expression_editor.png'
+	import TiltGrouping from '~/images/proj1/grouping.png'
+	import NightTexture from '~/images/proj1/night_map.png'
+	import DayTexture from '~/images/proj1/day_map.png'
+	import CloudsTexture from '~/images/proj1/clouds.png'
+	import AtmosphereTexture from '~/images/proj1/atmosphere_texture.png'
+	import EarthStill from '~/images/proj1/solar_system_still.png'
+	import EarthVideo from '~/images/proj1/solar_system_test.mp4'
+	
 	import Original from '~/images/proj2/original.webp'
 	import Model1 from '~/images/proj2/Modeling.png'
 	import Model2 from '~/images/proj2/Rivets.png'
@@ -15,9 +26,8 @@
 	import TreasureVideo from '~/images/proj2/chest.mp4'
 	import TreasureImage from '~/images/proj2/chest2.jpg'
 	
-	import BallSpiderverseImage from '~/images/proj3/spiderverse.jpg'
+	import BallSpiderVerseImage from '~/images/proj3/spiderverse.jpg'
 	
-	const store = useStore()
 	import BallStoryboardImage from '~/images/proj3/storyboard.jpg'
 	import BallRiggingImage from '~/images/proj3/rigging.png'
 	import BallAnimationImage from '~/images/proj3/animation.png'
@@ -28,7 +38,8 @@
 	import BallLightingImage from '~/images/proj3/lighting.png'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
-	
+	const store = useStore()
+
 
 </script>
 
@@ -42,22 +53,55 @@
 				<template #title>Planet Animation</template>
 				<template #date>September 16, 2025</template>
 				
-				<PageImage/>
-<!--				-->
-<!--				<PageSection>-->
-<!--					<template #title>Original Animation</template>-->
-<!--					This is my original animation from the tutorial-->
-<!--					-->
-<!--					<PageVideo/>-->
-<!--				</PageSection>-->
-<!--				<PageSection>-->
-<!--					<template #title>Animating Orbit and Revolution</template>-->
-<!--					To animate the orbit and revolution of the planets, I used the expression editor in maya-->
-<!--					since it's easier to manage than keyframes. I used semi-realistic orbit speeds and added a-->
-<!--					time offset so the planets aren't lined up in the initial frame. I grouped each planet-->
-<!--					twice, one group for orbit and one group for revolution on a tilt. I rotated each tilt group-->
-<!--					by their respective tilts so revolution stays on an axis.-->
-<!--				</PageSection>-->
+				<PageSection>
+					<template #title>Original Animation</template>
+					This is my original animation from the tutorial.
+					<PageVideo :video-src="PlanetOriginal"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Animating Orbit and Revolution</template>
+					At first, I used the graph editor to keyframe the orbit and revolution of the planets.
+					<PageImage :image-src="GraphEditor"/>
+					This quickly became verrrrry tedious, especially when I wanted to edit the speed of
+					orbits and whatnot. I also wanted to make the orbit speed and rotation semi realistic,
+					which is difficult in the graph editor. Not to mention how clunky it was in the first place.
+					<br><br>
+					So, I figured out how to use the expression editor, which was also pretty clunky but
+					much easier than setting keyframes for this type of thing. I setup a multiplier
+					so I could modify the speed of the whole animation with one number and set the orbit
+					and rotation speeds using somewhat realistic values.
+					<PageImage :image-src="ExpressionEditor"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Texturing!</template>
+					I was honestly super motivated to make a good looking render, so I spent most of my time
+					on this project on the texturing. I found realistic textures for all of the planets
+					from a website and got a HDRi for the space background. I focused mostly on the Earth
+					because I wanted some close up shots.
+					<br><br>
+					Using Hypershade for the texturing seemed intuitive at first. I quickly realized Arnold
+					is much better than Maya's default renderer and switched to Arnold textures, which were
+					easy to use for the most part. Then, I tried to texture the 'night' area of the earth
+					(the city lights on the unlit part of the Earth). It did not go well. I spent soooo
+					much time watching tutorials and reading online why things that seemed like they should
+					work just didn't. I ended up getting something that looked decent but not great.
+					<PageImage :image-src="NightTexture"/>
+					Then, I used the other texture maps for the Earth, including specular, bump map, normal map, and day map.
+					I got cloud maps as well and added them to separate geometry that was slightly scaled
+					above the earth.
+					<PageImage :image-src="DayTexture"/>
+					<PageImage :image-src="CloudsTexture"/>
+					After lighting the Earth, it still didn't look right, so I looked into volumes to create
+					an atmosphere. I couldn't get the Arnold volumes to work right, so I switched to using
+					a surface texture. I used an aiFacingRatio, which I found in a tutorial, to add a blue tint
+					to the edges of the Earth.
+					<PageImage :image-src="AtmosphereTexture"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Final Rendering</template>
+					<PageImage :image-src="EarthStill"/>
+					<PageVideo :video-src="EarthVideo"/>
+				</PageSection>
 			</PageView>
 			<PageView v-else-if="store.currentProject === 'treasure-chest'">
 				<template #project>Project 2</template>
@@ -119,7 +163,7 @@
 					including animating on twos, dotted halftones, RGB glitch effects, and just the overall style
 					and color theme of the movie (specifically the What's Up Danger scene!).
 					
-					<PageImage :image-src="BallSpiderverseImage"/>
+					<PageImage :image-src="BallSpiderVerseImage"/>
 				</PageSection>
 				<PageSection>
 					<template #title>Storyboard</template>
@@ -175,6 +219,7 @@
 					<PageVideo :video-src="BallVideo"/>
 				</PageSection>
 			</PageView>
+			
 			
 		</KeepAlive>
 		
