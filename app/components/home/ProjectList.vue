@@ -4,6 +4,7 @@
 	import EarthVideo from '~/images/proj1/solar_export.mp4'
 	import ChestVideo from '~/images/proj2/chest.mp4'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
+	import RubeVideo from '~/images/proj4/rube_goldberg.mp4'
 	
 	const projectListEl = useTemplateRef('projectListEl')
 	const observerThreshold = useTemplateRef('observerThreshold')
@@ -53,6 +54,12 @@
 			Ball Animation
 			<template #details>
 				Project 3
+			</template>
+		</ProjectListItemView>
+		<ProjectListItemView name="rube-goldberg" :image-src="RubeVideo" :selected="selectedIndex === 3">
+			Rube Goldberg
+			<template #details>
+				Project 4
 			</template>
 		</ProjectListItemView>
 	</div>

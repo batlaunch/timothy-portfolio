@@ -38,6 +38,8 @@
 	import BallLightingImage from '~/images/proj3/lighting.png'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
+	import RubeVideo from '~/images/proj4/rube_goldberg.mp4'
+	
 	const store = useStore()
 
 
@@ -65,7 +67,8 @@
 					This quickly became verrrrry tedious, especially when I wanted to edit the speed of
 					orbits and whatnot. I also wanted to make the orbit speed and rotation semi realistic,
 					which is difficult in the graph editor. Not to mention how clunky it was in the first place.
-					<br><br>
+					<br>
+					<br>
 					So, I figured out how to use the expression editor, which was also pretty clunky but
 					much easier than setting keyframes for this type of thing. I setup a multiplier
 					so I could modify the speed of the whole animation with one number and set the orbit
@@ -78,7 +81,8 @@
 					on this project on the texturing. I found realistic textures for all of the planets
 					from a website and got a HDRi for the space background. I focused mostly on the Earth
 					because I wanted some close up shots.
-					<br><br>
+					<br>
+					<br>
 					Using Hypershade for the texturing seemed intuitive at first. I quickly realized Arnold
 					is much better than Maya's default renderer and switched to Arnold textures, which were
 					easy to use for the most part. Then, I tried to texture the 'night' area of the earth
@@ -86,7 +90,8 @@
 					much time watching tutorials and reading online why things that seemed like they should
 					work just didn't. I ended up getting something that looked decent but not great.
 					<PageImage :image-src="NightTexture"/>
-					Then, I used the other texture maps for the Earth, including specular, bump map, normal map, and day map.
+					Then, I used the other texture maps for the Earth, including specular, bump map, normal map, and day
+					map.
 					I got cloud maps as well and added them to separate geometry that was slightly scaled
 					above the earth.
 					<PageImage :image-src="DayTexture"/>
@@ -159,7 +164,8 @@
 				<PageSection>
 					<template #title>Inspiration</template>
 					I wanted the style of my animation to be similar to the movie Spider-Man: Into the Spider-Verse.
-					I watched some videos on how they animated the movie and incorporated a few things into my animation,
+					I watched some videos on how they animated the movie and incorporated a few things into my
+					animation,
 					including animating on twos, dotted halftones, RGB glitch effects, and just the overall style
 					and color theme of the movie (specifically the What's Up Danger scene!).
 					
@@ -168,11 +174,12 @@
 				<PageSection>
 					<template #title>Storyboard</template>
 					I wanted to animate a ball bouncing on top of buildings with the same aesthetic as the movie.
-					<br><br>
+					<br>
+					<br>
 					After my presentation, I added more time to my animation created a "plot", so I
 					made a new storyboard with an extra scene and a portal.
 					<PageImage :image-src="BallStoryboardImage"/>
-				</PageSection>				
+				</PageSection>
 				<PageSection>
 					<template #title>Rigging</template>
 					I used a lattice with control points to control the squash and stretch of the ball. This
@@ -185,7 +192,8 @@
 					the path of the keyframes. The animators in Into the Spider-Verse animated the characters
 					on twos, so attempted doing that. I manually created step keyframes every other frame
 					so the ball "paused" after each frame of movement.
-					<br><br>
+					<br>
+					<br>
 					I animated the cameras on ones so the camera movement was smooth but the character (the ball)
 					movement was choppy.
 					<PageImage :image-src="BallAnimationImage2"/>
@@ -193,15 +201,20 @@
 				</PageSection>
 				<PageSection>
 					<template #title>Texturing</template>
-					For the buildings lights, I found a blocky texture online and combined it with the emission color for the lights,
+					For the buildings lights, I found a blocky texture online and combined it with the emission color
+					for the lights,
 					and scaled up the same texture for the emission level. For the other materials in the buildings,
 					I created a glass texture that sat on geometry just outside of the lights, and an aiToon texture for
 					the shell. The silhouette buildings are just stretched cubes with an aiToon texture.
-					<br><br>
-					Into the Spider-Verse has dotted highlights and shadows which adds to the comic book style. I attempted
+					<br>
+					<br>
+					Into the Spider-Verse has dotted highlights and shadows which adds to the comic book style. I
+					attempted
 					to create my own in Maya with ball by using a shader I found online for the dots combined with an
-					aiToon shader. The results weren't that impressive, so I added some dotted highlights in After Effects.
-					<br><br>
+					aiToon shader. The results weren't that impressive, so I added some dotted highlights in After
+					Effects.
+					<br>
+					<br>
 					For the portal, I used aiToonShaders with high emission, and added glitch effects in After Effects.
 					<PageImage :image-src="BallTextureImage"/>
 					<PageImage :image-src="BallTexturesImage"/>
@@ -209,7 +222,8 @@
 				<PageSection>
 					<template #title>Lighting and Scene</template>
 					For the lighting, I used a few main lights and set up additional lights for each shot. I laid out my
-					buildings (lit and silhouette) based on my camera positions. I ended up spending a lot of time tweaking
+					buildings (lit and silhouette) based on my camera positions. I ended up spending a lot of time
+					tweaking
 					all the building positions and shot-specific lights to get the shots I wanted.
 					<PageImage :image-src="BallLightingImage"/>
 					<PageImage :image-src="BallSceneImage"/>
@@ -219,10 +233,16 @@
 					<PageVideo :video-src="BallVideo"/>
 				</PageSection>
 			</PageView>
+			<PageView v-else-if="store.currentProject=='rube-goldberg'">
+				<template #title>Rube Goldberg</template>
+				<template #project>Project 4</template>
+				<PageVideo :video-src="RubeVideo"/>
 			
-			
-		</KeepAlive>
+			</PageView>
 		
+		
+		</KeepAlive>
+	
 	
 	</Transition>
 
@@ -245,7 +265,7 @@
 	.v-leave-to {
 		transform: scale(0.9);
 		opacity: 0;
-
+		
 	}
 
 </style>
@@ -298,7 +318,7 @@
 		--border-color: rgba(255, 255, 255, 0.1);
 		--hover-color: rgba(255, 255, 255, 0.05);
 		
-		--primary-color-values: 237,167,0;
+		--primary-color-values: 237, 167, 0;
 		/*--primary-color-values: 56, 59, 252;*/
 		--primary-color: rgba(var(--primary-color-values), 1);
 		--primary-color-20: rgba(var(--primary-color-values), 0.2);
