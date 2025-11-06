@@ -6,7 +6,6 @@
 	
 	const video = useTemplateRef('video')
 	
-
 	
 	const {selected} = toRefs(props)
 	watch(selected, value => {
@@ -22,22 +21,23 @@
 		}
 	})
 	
-	onMounted(() =>{
-		console.log(props.imageSrc)
-		console.log(video.value.children[0])
-		let source = document.createElement('source');
-		
-		source.setAttribute('src', props.imageSrc);
-		source.setAttribute('type', 'video/mp4');
-		video.value.appendChild(source)
-		// video.value.children[0].src = props.imageSrc
-		if (selected!.value) {
-			video?.value.play()
-		}
-	})
+	// onMounted(() =>{
+	// 	console.log(props.imageSrc)
+	// 	console.log(video.value.children[0])
+	// 	let source = document.createElement('source');
+	//
+	// 	source.setAttribute('src', props.imageSrc);
+	// 	source.setAttribute('type', 'video/mp4');
+	// 	video.value.appendChild(source)
+	// 	console.log(video.value.children)
+	// 	// video.value.children[0].src = props.imageSrc
+	// 	if (selected!.value) {
+	// 		video?.value.play()
+	// 	}
+	// })
 	
 	const store = useStore()
-	
+
 
 </script>
 
@@ -47,65 +47,61 @@
 			<p v-if="$slots.details" class="details">
 				<slot name="details"/>
 			</p>
-			<h1 class="title"><slot/></h1>
-
-
-			<button class="common" @click="store.currentProject = props.name">
+			<h1 class="title">
+				<slot/>
+			</h1>
+			
+			
+			<button class="glass" @click="store.currentProject = props.name">
 				See project
 				<GotoIcon/>
 			</button>
 		</div>
-		<video ref="video" class="project-hero" muted loop playsinline>
-<!--			<source src="../../images/project1-hero.mp4" type="video/webm">-->
-		</video>
+		<div class="video-container">
+			<video ref="video" class="project-hero" muted loop playsinline autoplay>
+				<source :src="imageSrc" type="video/mp4">
+			</video>
+		</div>
+	
 	</div>
 </template>
 
 <style scoped>
 	.project {
 		width: 100%;
+		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: 32px;
-		/*background-color: rgba(0,0,0,1);*/
-		
-		aspect-ratio: 16/10;
-		/*border: 1px solid var(--primary-color-20);*/
-		/*background: var(--primary-color-5);*/
-		/*box-shadow: inset 0 0 20px var(--primary-color-20);*/
 		position: relative;
-		display: flex;
-		overflow: hidden;
 		transition: 800ms;
-		
 		scroll-snap-align: center;
-		
+		z-index: 5;
+	}
+	
+	.video-container {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		display: flex;
 	}
 	
 	.title {
 		font-size: 2.25rem;
 	}
 	
-	
 	.project:before {
 		position: absolute;
 		inset: 0;
 		content: '';
-		background: rgba(0,0,0,0.4);
+		background: rgba(0, 0, 0, 0.4);
 		z-index: -1;
 	}
 	
-	.project:not(.selected) {
-		opacity: 30%;
-		transform: scale(0.9);
-	}
-	
-	.project.selected {
-		box-shadow: 0 10px 300px var(--primary-color-20);
-		/*border-radius: 1px solid var(--border-color);*/
-		
-	}
+	/*.project:not(.selected) {*/
+	/*	opacity: 30%;*/
+	/*	transform: scale(0.9);*/
+	/*}*/
 	
 	button.common {
 		border: none;
@@ -122,22 +118,107 @@
 		transition: 250ms;
 		/*color: white;*/
 		/*border: 1px solid rgba(255,255,255,0.2);*/
-		box-shadow: inset 1px 1px 0px rgba(255,255,255,0.3),
+		box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.3),
 		inset -1px -1px 0px rgba(0, 0, 0, 0.3),
-	inset 0 0 8px rgba(255,255,255,0.3);
+		inset 0 0 8px rgba(255, 255, 255, 0.3);
 		backdrop-filter: blur(8px);
 	}
 	
-	button.common:hover {
-		transform: scale(1.05);
+	@property --c1 {
+		syntax: '<color>';
+		inherits: false;
+		initial-value: #dddddd;
 	}
 	
+	@property --c2 {
+		syntax: '<color>';
+		inherits: false;
+		initial-value: #555555;
+	}
+	
+	@property --c3 {
+		syntax: '<color>';
+		inherits: false;
+		initial-value: #333333;
+	}
+	
+	button.glass {
+		appearance: none;
+		all: unset;
+		position: relative;
+		padding: 1rem 2rem;
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(4px);
+		color: white;
+		border-radius: 2rem;
+		cursor: pointer;
+		font-size: 16px;
+		font-weight: 500;
+		margin-top: 32px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 32px;
+		
+		box-shadow:
+			inset 1px 1px 0px rgba(255, 255, 255, 0.5),  /* Highlight top left */
+			inset 4px 4px 8px rgba(255, 204, 0, 0.3),  /* Glow top left */
+			inset -1px -1px 0px rgba(255, 162, 85, 0.2),
+			inset -4px -4px 8px rgba(255, 184, 113, 0.2),
+			inset 0px 0px 24px rgba(255, 87, 0, 0.2),
+			0 8px 32px 0 rgba(255, 140, 46, 0.2);
+		
+	}
+	
+	button.glass:before {
+		/*content: '';*/
+		/*position: absolute;*/
+		/*!*   z-index: -1; *!*/
+		/*pointer-events: none;*/
+		/*inset: 0px;*/
+		
+		/*border-radius: inherit;*/
+		/*!* padding is the border width *!*/
+		/*padding: 2px;*/
+		/*background: linear-gradient(*/
+		/*	to bottom right,*/
+		/*	var(--c1) 0%,*/
+		/*	var(--c3) 33%,*/
+		/*	var(--c2) 62%,*/
+		/*	var(--c3) 100%*/
+		/*);*/
+		/*-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);*/
+		/*mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);*/
+		/*-webkit-mask-composite: xor;*/
+		/*mask-composite: exclude;*/
+		/*transition: --c1 300ms ease, --c2 300ms ease, --c3 300ms ease;*/
+		/*box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 1);*/
+		
+	}
+	
+	/*button.common:hover {*/
+	/*	transform: scale(1.05);*/
+	/*}*/
 	
 	.content {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 4px;
+		position: relative;
+		z-index: 7;
+		animation: parallax linear;
+		animation-timeline: view();
+		
+	}
+	
+	.content:before {
+		position: absolute;
+		inset: -50px;
+		background: rgba(0, 0, 0, 0.4);
+		z-index: -1;
+		content: '';
+		filter: blur(40px);
 	}
 	
 	.details {
@@ -157,12 +238,24 @@
 	/*}*/
 	
 	.project-hero {
-		position: absolute;
 		inset: 0;
-		object-fit: cover;
+		/*object-fit: cover;*/
 		/*max-width: 100%;*/
-		max-height: 100%;
-		z-index: -2;
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+		opacity: 0.7;
 		
+		/*z-index: -2;*/
+		
+	}
+	
+	@keyframes parallax {
+		from {
+			translate: 0 200px;
+		}
+		to {
+			translate: 0 -200px;
+		}
 	}
 </style>

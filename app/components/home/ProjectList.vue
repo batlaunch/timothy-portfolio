@@ -5,38 +5,38 @@
 	import ChestVideo from '~/images/proj2/chest.mp4'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
-	const projectListEl = useTemplateRef('projectListEl')
-	const observerThreshold = useTemplateRef('observerThreshold')
-	
+	// const projectListEl = useTemplateRef('projectListEl')
+	// const observerThreshold = useTemplateRef('observerThreshold')
+	//
 	const selectedIndex = ref(0)
-	
-	onMounted(() => {
-		const elements = Array.from(projectListEl.value!.children)
-		
-		const observer = new IntersectionObserver(entries => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					selectedIndex.value = elements.indexOf(entry.target)
-					console.log('selected at', selectedIndex.value)
-				}
-			})
-		}, {
-			// Optional: Configure observer options
-			// root: document.getElementById('main'), // defaults to the viewport
-			// rootMargin: '-10% 0%', // no margin around the root
-			threshold: 0.5 // trigger when 50% of the element is visible
-		})
-		
-		for (const element of elements) {
-			observer.observe(element)
-			
-		}
-	})
+	//
+	// onMounted(() => {
+	// 	const elements = Array.from(projectListEl.value!.children)
+	//
+	// 	const observer = new IntersectionObserver(entries => {
+	// 		entries.forEach(entry => {
+	// 			if (entry.isIntersecting) {
+	// 				selectedIndex.value = elements.indexOf(entry.target)
+	// 				console.log('selected at', selectedIndex.value)
+	// 			}
+	// 		})
+	// 	}, {
+	// 		// Optional: Configure observer options
+	// 		// root: document.getElementById('main'), // defaults to the viewport
+	// 		// rootMargin: '-10% 0%', // no margin around the root
+	// 		threshold: 0.5 // trigger when 50% of the element is visible
+	// 	})
+	//
+	// 	for (const element of elements) {
+	// 		observer.observe(element)
+	//
+	// 	}
+	// })
 
 </script>
 
 <template>
-	<div ref="projectListEl" class="project-list-inner">
+<!--	<div ref="projectListEl" class="project-list-inner">-->
 		<ProjectListItemView name="planet-animation" :image-src="EarthVideo" :selected="selectedIndex === 0">
 			Planet Animation
 			<template #details>
@@ -55,7 +55,7 @@
 				Project 3
 			</template>
 		</ProjectListItemView>
-	</div>
+<!--	</div>-->
 
 
 </template>
@@ -64,31 +64,11 @@
 	.project-list-inner {
 		display: flex;
 		flex-direction: column;
-		gap: 48px;
-		max-width: 900px;
+		width: 100%;
+		height: 100%;
 		position: relative;
 		z-index: 3;
 		padding: 50vh 48px;
 		flex: 1 1 900px;
 	}
-	
-	.observer-threshold {
-		position: fixed;
-		top: 50%;
-		height: 2px;
-		background: red;
-		left: 0;
-		right: 0;
-	}
-	
-	/*.project-list-inner:before {*/
-	/*	z-index: -1;*/
-	/*	content: '';*/
-	/*	background: var(--primary-color);*/
-	/*	position: absolute;*/
-	/*	inset: 0;*/
-	/*	border-radius: 100%;*/
-	/*	filter: blur(400px);*/
-	/*	opacity: 20%;*/
-	/*}*/
 </style>
