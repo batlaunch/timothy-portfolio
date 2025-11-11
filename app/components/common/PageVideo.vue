@@ -2,7 +2,7 @@
 	import PauseIcon from '~/components/common/icons/PauseIcon.vue'
 	import PlayIcon from '~/components/common/icons/PlayIcon.vue'
 	
-	const props = defineProps(['videoSrc'])
+	const props = defineProps(['videoSrc', 'loop'])
 	
 	const video = useTemplateRef('video')
 	
@@ -21,7 +21,7 @@
 
 <template>
 	<div class="video-container">
-		<video ref="video" class="page-video" muted controls>
+		<video ref="video" class="page-video" muted controls :loop="loop">
 <!--			<source src="../../images/project1-hero.mp4" type="video/webm">-->
 		</video>
 <!--		<div class="controls" @click="playing = !playing">-->

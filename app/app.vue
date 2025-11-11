@@ -38,7 +38,8 @@
 	import BallLightingImage from '~/images/proj3/lighting.png'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
-	import RubeVideo from '~/images/proj4/rube_goldberg.mp4'
+	import RubeVideo from '~/images/proj4/rube_goldberg_final.mp4'
+	import RubeCamera from '~/images/proj4/camera.png'
 	
 	const store = useStore()
 
@@ -236,8 +237,60 @@
 			<PageView v-else-if="store.currentProject=='rube-goldberg'">
 				<template #title>Rube Goldberg</template>
 				<template #project>Project 4</template>
-				<PageVideo :video-src="RubeVideo"/>
-			
+				<PageSection>
+					<template #title>Animating</template>
+					I simulated almost everything in this animation, with a few exceptions. Using Bullet, I created static rigid bodies for the ball to
+					roll on, kinematic rigid bodies for the forces acting on objects (such as the piston on the ball), and dynamic
+					rigid bodies for the ball and minecart. I added constraints to the minecart(s) so they moved how I wanted. The
+					only time I keyframed the ball was at the end (as the ball falls into the cob web) to make a perfect loop.
+				</PageSection>
+				<PageSection>
+					<template #title>Scene</template>
+					My scene consisted mostly of rectangular prisms with a stone texture, some light sources, and
+					a few other objects. The lava and torches use mesh lights to illuminate the cave, with some Arnold
+					emission to highlight the actual surface of the light. I added several area lights with blue tints, positioned
+					off camera, to light the rest of the scene and contrast the warm tint of the other lights.
+				</PageSection>
+				<PageSection>
+					<template #title>Texturing</template>
+					I kept most of the textures, excluding the ball, Minecraft themed. Most of the textures I created were
+					just sourced from the real game, excluding the stone texture. For this texture plugged an aiCellNoise node
+					into a ramp so I could control how dense I wanted the colors.
+				</PageSection>
+				<PageSection>
+					<template #title>Camera</template>
+					Initially, I linked the camera's x and y positions to the ball, but the camera was very jumpy looked
+					unrealistic. So I created a motion path for the camera, but I didn't like the way it looked either because
+					it wasn't 'locked' on the ball enough. I also didn't want to deal with editing the path as I
+					changed the scene.
+					<br><br>
+					So, with a little help from ChatGPT, I created a script for the camera to follow the ball with spring-like
+					motion (imagine attaching a spring to a point positioned at the ball's position x y position). I added
+					a velocity attribute to the camera and updated it in the script every frame, then used the distance
+					from the camera to the ball, combined with a dampening factor times the velocity to update the camera's
+					position. I also incorporated the other balls (the ball that rolls on the pressure plate and the ball
+					that comes out of the portal) by averaging them with the original ball's position when I wanted the
+					camera to frame them, and interpolating to this average over a few frames for smoothness. This was a little
+					complicated and took me some time, but turned out looking really good. I baked the frames for rendering
+					purposes.
+					<PageImage :image-src="RubeCamera"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Water</template>
+					From what I can tell, Bullet does not support fluid dynamics. So, for the water dynamics, I created another expression.
+					I know some basic physics, and I got the hang of the expression editor when animating the camera. I defined a buoyant
+					force for the water column, and an applied force for the moving water. I applied these to the ball via the impulse attribute, then increased the
+					linearDamping attribute of the ball so it looked like the ball was moving through a fluid. I set the forces and damping so they only
+					turned on when inside the bounds of the water, which I defined using locators in the scene. Overall, this turned out
+					well, although I think the ball bounced too much after it reached the top of the water column.
+				</PageSection>
+				<PageSection>
+					<template #title>Final Render</template>
+					Turn on sound, use headphones for better experience! Also, I had a lot of Z-fighting in this render (I overlapped a lot of geometry
+					which created some flickering textures), so I am fixing that and re-rendering soon.
+					<PageVideo :video-src="RubeVideo" loop/>
+				</PageSection>
+				
 			</PageView>
 		
 		
