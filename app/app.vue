@@ -38,7 +38,7 @@
 	import BallLightingImage from '~/images/proj3/lighting.png'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	
-	import RubeVideo from '~/images/proj4/rube_goldberg_final.mp4'
+	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
 	import RubeCamera from '~/images/proj4/camera.png'
 	
 	const store = useStore()

@@ -4,7 +4,7 @@
 	import EarthVideo from '~/images/proj1/solar_export.mp4'
 	import ChestVideo from '~/images/proj2/chest.mp4'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
-	import RubeVideo from '~/images/proj4/rube_goldberg_final.mp4'
+	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
 	
 	const projectListEl = useTemplateRef('projectListEl')
 	const observerThreshold = useTemplateRef('observerThreshold')
