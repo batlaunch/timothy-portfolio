@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	import 'highlight.js/styles/atom-one-dark.css'
-	import 'highlight.js/lib/common';
+	import 'highlight.js/lib/common'
+	import hljs from 'highlight.js'
+	
 	
 	const slots = useSlots()
 	
-	const code = computed(() => {
+	const codeText = computed(() => {
 		const vNodes = slots.default?.() ?? []
-		console.log(vNodes)
 		return vNodes
 			.map(v => {
 				// Text VNodes store newline literally
@@ -15,10 +16,15 @@
 			})
 			.join('')
 	})
+	
+	onMounted(() => {
+		hljs.highlightAll()
+	})
 </script>
 
 <template>
-	<highlightjs language="python" :code="code"/>
+	<pre><code>{{ codeText }}</code></pre>
+	
 <!--	hello-->
 </template>
 
