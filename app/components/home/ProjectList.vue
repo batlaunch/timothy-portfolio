@@ -62,6 +62,12 @@
 				Project 4
 			</template>
 		</ProjectListItemView>
+		<ProjectListItemView name="dominoes" :image-src="RubeVideo" :selected="selectedIndex === 4">
+			Dominoes
+			<template #details>
+				Project 5
+			</template>
+		</ProjectListItemView>
 	</div>
 
 

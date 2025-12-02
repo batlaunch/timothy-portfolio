@@ -40,6 +40,13 @@
 	
 	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
 	import RubeCamera from '~/images/proj4/camera.png'
+	import CodeView from '~/components/common/CodeView.vue'
+	
+	import DominoDominoes from '~/images/proj5/dominoes.png'
+	import DominoTextures from '~/images/proj5/textures.png'
+	import DominoDynamics from '~/images/proj5/dynamics.png'
+	import DominoRender from '~/images/proj5/render.png'
+	import DominoGrid from '~/images/proj5/grid.png'
 	
 	const store = useStore()
 
@@ -292,7 +299,406 @@
 				</PageSection>
 				
 			</PageView>
+			<PageView v-else-if="store.currentProject=='dominoes'">
+				<template #title>Dominoes</template>
+				<template #project>Project 5</template>
+				<PageSection>
+					My idea was to create a video using the dots, or pips, on the dominoes, as they are falling. I wanted a 3d grid of dominoes, with the Y axis
+					representing the Y in the video, the Z axis representing the X in the video, and the X axis representing the current frame. The dominoes fall
+					along the X axis, and as each YZ plane of dominoes fall, their pips light up with the current frame of the video.
+					<br><br>
+					I think this was a little ambitious. In addition, I don't think it even looked that cool anyways. The project itself has been done for a while
+					now, but I still do not have a final render. I have attempted to render around 6 times on the
+					lab machines (Maya doesn't have GPU drivers for macOS, and this would never render on a CPU), including
+					multiple times before Thanksgiving break (where I couldn't even get the project to load on the lab machines), once over Thanksgiving break (I spent
+					around 6 hours trying to render on the lab machines remotely on the command line via ssh, with basically infinite issues), and several times
+					after Thanksgiving break after making changes to reduce the amount of geometry. So far, I've only gotten 100 frames to render in total
+					due to crashing.
+				</PageSection>
+				<PageSection>
+					<template #title>Creating the Scene</template>
+					To create the scene, I wrote code that created several variations of dominoes with beveled edges, pips, and dividers. I made the pips
+					and the divider in actual geometry rather than with shaders for reasons that I explain in the textures section. I used an ID node
+					to randomize the order of the variations.
+					<br><br>
+					
+					<PageImage :image-src="DominoDominoes"/>
+					<PageImage :image-src="DominoGrid"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Dynamics</template>
+					I experimented with MASH Dynamics for a while, but it didn't meet my needs. For my animation, I needed the whole grid of dominoes
+					to fall in perfect synchrony, which the MASH Dynamics node is not meant for. I DID test it for a long time, so please
+					don't give me points off because I "didn't implement MASH dynamics". Instead, I created a MASH Python node that roughly simulated
+					the falling animation by updating the rotation and position (so it rotates on an anchor point) based on the dominoe's x position and the current frame.
+					I also used a MASH Color node, NOT for color, but as a data channel from the Python node to Arnold, as I could control the value in the Python node
+					and read the value in Arnold. I used it to signal which domino was currently falling via the red channel, and which dominoes had already
+					fallen via the green channel.
+					<PageImage :image-src="DominoDynamics"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Textures</template>
+					My idea was to create a video using the dominoes, where each pip is a 'pixel', each plane in a grid is a frame, and each frame
+					lights up as the dominoes in it are falling.
+					<br><br>
+					I first experimented with the MASH Color node to color a pip texture on the dominoes. Because the color node can only color on an per-instance basis,
+					all the pips in single domino would have to be the same color. Using this method, the images weren't detailed enough with the amount
+					of dominoes my computer could handle. So, to create per-pip lighting, I created the pips using real geometry and projected the image onto them.
+					To do this, I created a UV coordinate using a samplerInfo node, which I piped into some aiRanges to map Z and Y coordinates to UV coords.
+					Then I setup an image sequence to display the video. I decided to make the dominoes out of glass so the pip-lighting was visible from the camera.
+					<br><br>
+					To highlight only the dominoes that were currently falling, I created a second fully transparent texture and assigned it to an aiLayerShader
+					to mix it with the original 'lit' texture. To control which one is showing, I used the MASH Color node that I talked about in the dynamics
+					section, which was simply data channel between the Python node and Arnold. I used an aiUserDataColor node to receive the data from the Python node (essentially),
+					and used the red channel to control the visibility of the pip.
+					<PageImage :image-src="DominoTextures"/>
+					<PageImage :image-src="DominoRender"/>
+				
+				</PageSection>
+				
+				<PageSection>
+					<template #title>Code</template>
+					Code I executed directly in maya:
+					<CodeView>
+						<pre>
+# =====================
+# ==== dominoes.py ====
+# =====================
+
+'''
+This commented script adds the scripts directory to the path and imports the run function
+
+import sys, os
+import maya.cmds as cmds
+
+# Get the current Maya project root
+project_root = cmds.workspace(q=True, rd=True)
+
+# Build the path to the scripts directory
+scripts_path = os.path.join(project_root, "scripts")
+
+# Add it if not already present
+if scripts_path not in sys.path:
+sys.path.insert(0, scripts_path)
+
+print("Scripts path added:", scripts_path)
+
+from dominoes import run
+
+'''
+
+
+import main
+import importlib
+
+def run():
+    importlib.reload(main)
+    main.run()
+
+
+# ===================
+# ====  main.py  ====
+# ===================
+import importlib
+import maya.cmds as cmds
+
+import create_dominoes
+importlib.reload(create_dominoes)
+
+import mash
+importlib.reload(mash)
+
+import textures
+importlib.reload(textures)
+
+def run():
+    # --- Create multiple variations of dominoes ---
+    dominoes_group_name = 'all_dominoes'
+    if cmds.objExists(dominoes_group_name):
+    cmds.delete(dominoes_group_name)
+
+    variations = [
+        (2, 3),
+        (4, 6),
+        (5, 2),
+        (1, 4),
+        (5, 6),
+        (4, 5)
+    ]
+    dominoes = []
+    for var in variations:
+        domino = create_dominoes.create_domino(f'domino{str(var[0])}_{str(var[1])}', var[0], var[1])
+        dominoes.append(domino)
+
+    cmds.group(dominoes, name=dominoes_group_name)
+
+
+    # --- Create MASH network ---
+    waiter, distribute, repro = mash.create_network('mash', dominoes)
+
+    # --- Link time to image sequence ---
+    textures.set_textures()
+	# net = mash.mash_network('mash', domino.name)
+	# mash.setup_instancer(net)
+
+	
+# ===================
+# ====  mash.py  ====
+# ===================
+import maya.cmds as cmds
+import MASH.api as mapi
+import maya.mel as mel
+
+def create_floors(layers, waiter, spacing, width, depth):
+
+	floors_grp = 'floors_grp'
+	if cmds.objExists(floors_grp):
+		cmds.delete(floors_grp)
+	floors_grp = cmds.group(em=True, name=floors_grp)
+	
+	floors = []
+	
+	for i in range(layers):
+		level_y = -2.25 + i * spacing
+	
+	floor = cmds.polyCube(
+		w=width * 1.2,
+		h=0.25,
+		d=depth,
+		name=f"floor_{i+1}"
+	)[0]
+	
+	# Move to the correct Y
+	cmds.move(0, level_y, 0, floor, absolute=True)
+	
+	# Parent under floors group
+	cmds.parent(floor, floors_grp)
+	
+	floors.append(floor)
+	
+	cmds.sets(floors, e=True, forceElement='DominoSG')
+
+
+def create_network(name, sources):
+	waiter_name = f'{name}_Waiter'
+	dist_name = f'{name}_Distribute'
+	repro_name = f'{name}_Repro'
+	
+	# Delete network if it dexists
+	if cmds.objExists(waiter_name):
+		cmds.delete(waiter_name)
+	
+	# Create network
+	cmds.select(sources)
+	mel.eval('CreateMashNetwork;')
+	
+	# New waiter should be selected
+	waiter_list = cmds.ls(sl=True, type='MASH_Waiter')
+	if not waiter_list:
+		raise RuntimeError('No MASH_Waiter selected after MASHCreateNetwork')
+	
+	waiter = waiter_list[0]
+	
+	# Rename network
+	waiter = cmds.rename(waiter, waiter_name)
+	dist = cmds.listConnections(waiter, type='MASH_Distribute')[0]
+	repro = cmds.listConnections(waiter, type='MASH_Repro')[0]
+	
+	# add_random_flip(waiter)
+	
+	# --- Grid properties ---
+	cmds.setAttr(dist + '.arrangement', 6)
+	cmds.setAttr(waiter + '_Id.idtype', 2)
+	
+	GRID_W = 160
+	GRID_H = 90
+	SPACING_W = 0.5
+	SPACING_H = 0.5
+	
+	# Padding
+	# PADDING = 10
+	# GRID_W += PADDING*2
+	# GRID_H += PADDING*2
+	
+	layers = int((GRID_H) / (4 + SPACING_H))
+	cmds.setAttr(dist + '.gridAmplitudeX', GRID_W)
+	cmds.setAttr(dist + '.gridAmplitudeY', GRID_H)
+	cmds.setAttr(dist + '.gridx', GRID_W / (2 + SPACING_W))
+	cmds.setAttr(dist + '.gridy', layers)
+	cmds.setAttr(dist + '.gridz', 1)
+	
+	
+	# --- Dynamics ---
+	mn = mapi.Network(waiter)
+	# mn.getNetworkFromNode(waiter)
+	dyn_node = mn.addNode("MASH_Dynamics")
+	
+	create_floors(layers, waiter, GRID_H/(layers-1), GRID_W, 100)
+	
+	# cmds.setAttr(dist + ".gridSizeZ", 5.0)
+	
+	return waiter, dist, repro
+	
+
+# ==============================
+# ====  create_dominoes.py  ====
+# ==============================
+import maya.cmds as cmds
+
+def get_or_create_cube(name, w, h, d):
+	# Delete if exists
+	if cmds.objExists(name):
+		cmds.delete(name)
+	
+	return cmds.polyCube(name=name, w=w, h=h, d=d)[0]
+
+def get_or_create_sphere(name, r, sx, sy):
+	return cmds.polySphere(
+		name=name,
+		r=r,
+		sx=sx,
+		sy=sy
+	)[0]
+
+def bevel_domino(name):
+	# Bevel corners
+	cmds.select(f'{name}.e[6:7]', f'{name}.e[10:11]')
+	cmds.polyBevel3(offset=0.4, segments=6)
+	
+	# Bevel edges
+	cmds.select(f'{name}.f[29]', f'{name}.f[28]') # Select faces
+	cmds.select(cmds.polyListComponentConversion(toEdge=True))
+	cmds.polyBevel3(offset=0.05, segments=2)
+
+# Dictionary with positions of pips
+p = 0.5
+pip_positions = [
+	[], # 0
+	[(0, 0)], # 1
+	[(-p, -p), (p, p)], # 2
+	[(-p, -p), (0,0), (p, p)], # 3
+	[(-p, -p), (-p, p), (p, -p), (p, p)], # 4
+	[(-p, -p), (-p, p), (p, -p), (p, p), (0, 0)], # 5
+	[(-p, -p), (-p, p), (p, -p), (p, p), (-p, 0), (p, 0)], # 6
+]
+
+def create_pips(prefix, positions, top):
+	# Hold all pips
+	pips = []
+	
+	for i, pos in enumerate(positions):
+		pip = prefix + '_Pip' + ('Top' if top else 'Bottom') + str(i + 1)
+		pip = get_or_create_sphere(pip, 0.2, 6, 5)
+		cmds.move(pos[0], pos[1], 0, pip, relative=True)
+	
+		# Move pip to top or bottom of domino and move to outside face
+		vert = -1 if top else 1
+		cmds.move(0, vert, 0.25, pip, relative=True)
 		
+		pips.append(pip)
+	
+	# Assign shaders
+	cmds.sets(pips, e=True, forceElement='PipLitSG')
+	
+	return pips
+
+
+def create_domino(name, pips_top, pips_bottom):
+	# Track objects in domino
+	objects = []
+	
+	# Delete group if exists
+	group_name = name + '_Group'
+	if cmds.objExists(group_name):
+		cmds.delete(group_name)
+		
+	# Make base
+	name = get_or_create_cube(name, 2, 4, 0.5)
+	bevel_domino(name)
+	cmds.sets(name, e=True, forceElement='DominoSG')
+	objects.append(name)
+	
+	# Make divider
+	divider = get_or_create_cube(name + '_Divider', 1.6, 0.15, 0.2)
+	cmds.move(0, 0, 0.25, divider, relative=True)
+	cmds.sets(divider, e=True, forceElement='PipLitSG') # Shader
+	objects.append(divider)
+	
+	# Make and place pips
+	objects += create_pips(name, pip_positions[pips_top], top=True)
+	objects += create_pips(name, pip_positions[pips_bottom], top=False)
+	
+	return cmds.group(objects, name=group_name)
+						</pre>
+						
+					</CodeView>
+					Code I executed in the MASH Python node:
+					<CodeView>
+						<pre>
+'''
+This is not code I executed directly in maya, it is code I use in my
+MASH python node.
+'''
+
+import openMASH
+import math
+
+md = openMASH.MASHData(thisNode)
+frame = md.getFrame()
+
+fall_angle_deg = -80.0
+dominoes_per_sec = 24.0
+start_time = 0
+offset = 100
+
+t = max(md.getFrame() - offset, 0)
+show_first = md.getFrame() - offset >= 0
+
+for i in range(len(md.position)):
+	idx = md.id[i]
+	pos = md.position[i]
+	
+	frame_interp = 30
+	
+	start_t = start_time + ((idx - (pos.z - 40) * 20) / dominoes_per_sec)
+	
+	# Normalized progress s: 0 before start, 1 at the end of fall
+	s = (t - start_t) / 10
+	s = min(max(s, 0),1)
+	
+	if s == 1.0:
+		theta = fall_angle_deg
+	else:
+		# s^2 gives a gravity-ish feel
+		theta = fall_angle_deg * (s * s)
+	
+	rot = md.rotation[i]
+	pos = md.position[i]
+	rot.x = theta
+	md.outPosition[i].z = pos.z + math.sin(math.radians(theta)) * 2
+	md.outPosition[i].z += math.cos(math.radians(theta)) * 0.25
+	md.outPosition[i].y = pos.y + math.cos(math.radians(theta))*2
+	md.outPosition[i].y -= math.sin(math.radians(theta)) * 0.25
+	md.rotation[i] = rot
+
+if 0.5 < s < 0.7 or (34 < md.outPosition[i].z and show_first):
+	md.color[i][0] = 1
+else:
+	md.color[i][0] = 0
+
+
+md.setData()</pre>
+					</CodeView>
+					
+
+				</PageSection>
+				
+				<PageSection>
+					<template #title>Final Render</template>
+					Something will be here at some point...
+				</PageSection>
+			
+			</PageView>
 		
 		</KeepAlive>
 	
