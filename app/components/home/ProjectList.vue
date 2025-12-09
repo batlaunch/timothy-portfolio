@@ -5,6 +5,7 @@
 	import ChestVideo from '~/images/proj2/chest.mp4'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
+	import DominoVideo from '~/images/proj5/export1.mp4'
 	
 	const projectListEl = useTemplateRef('projectListEl')
 	const observerThreshold = useTemplateRef('observerThreshold')
@@ -62,7 +63,7 @@
 				Project 4
 			</template>
 		</ProjectListItemView>
-		<ProjectListItemView name="dominoes" :image-src="RubeVideo" :selected="selectedIndex === 4">
+		<ProjectListItemView name="dominoes" :image-src="DominoVideo" :selected="selectedIndex === 4">
 			Dominoes
 			<template #details>
 				Project 5
