@@ -2,10 +2,14 @@
 	import CloseIcon from '~/components/common/icons/CloseIcon.vue'
 	
 	const store = useStore()
+	
+	const pageEl = useTemplateRef('pageEl')
+	
+	onMounted(() => pageEl?.value.focus())
 </script>
 
 <template>
-	<section class="page-view">
+	<section class="page-view" tabindex="0" @keyup.esc="store.currentProject = null" ref="pageEl">
 		<div class="page-inner">
 			<article class="article">
 				<div class="header">
@@ -55,6 +59,11 @@
 		display: flex;
 		/*flex-direction: column;*/
 		justify-content: center;
+		position: absolute;
+		inset: 0;
+		z-index: 5;
+		background: black;
+		outline: none;
 	}
 	
 	.project-number {
@@ -104,7 +113,7 @@
 	
 	.exit-button {
 		border: none;
-		border-radius: 8px;
+		border-radius: 100%;
 		background: var(--border-color);
 		color: var(--neutral-color);
 		width: 48px;

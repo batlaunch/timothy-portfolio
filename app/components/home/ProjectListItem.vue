@@ -2,12 +2,12 @@
 	
 	import GotoIcon from '~/PlusIcon.vue'
 	
-	const props = defineProps(['name', 'imageSrc', 'selected'])
+	const props = defineProps(['name', 'imageSrc', 'selected', 'colors'])
 	
 	const video = useTemplateRef('video')
 	
 	
-	const {selected} = toRefs(props)
+	const {selected, colors} = toRefs(props)
 	watch(selected, value => {
 		if (value) {
 			console.log('selected')
@@ -21,7 +21,8 @@
 		}
 	})
 	
-	// onMounted(() =>{
+	onMounted(() =>{
+		console.log(colors)
 	// 	console.log(props.imageSrc)
 	// 	console.log(video.value.children[0])
 	// 	let source = document.createElement('source');
@@ -34,9 +35,11 @@
 	// 	if (selected!.value) {
 	// 		video?.value.play()
 	// 	}
-	// })
+	})
 	
 	const store = useStore()
+	
+	const shadowColor = computed(() => `linear-gradient(to right, ${colors?.value[0]}, ${colors?.value[1]})`)
 
 
 </script>
@@ -79,24 +82,57 @@
 		z-index: 5;
 	}
 	
+	.project:not(.selected) {
+		transform: scale(0.85);
+		opacity: 0.4;
+	}
+	
 	.video-container {
 		position: absolute;
-		inset: 0;
+		inset: 60px 100px;
 		z-index: -1;
 		display: flex;
+		background: black;
+		max-width: 1200px;
+		margin: auto;
+	}
+	.video-container:before {
+		position: absolute;
+		z-index: -3;
+		inset: 40px;
+		filter: blur(100px);
+		opacity: 0.6;
+		transition: opacity 1000ms;
+		content: '';
+		background: v-bind(shadowColor);
+		transform: translateY(20px);
+		/*background: white;*/
+		
+	}
+	
+	.selected .video-container:before {
+	
+	}
+	
+	.project:not(.selected) .video-container:before {
+		opacity: 0;
+		
+		/*background: linear-gradient(to right, blue, green);*/
+		
+		
 	}
 	
 	.title {
 		font-size: 2.25rem;
 	}
 	
-	.project:before {
-		position: absolute;
-		inset: 0;
-		content: '';
-		background: rgba(0, 0, 0, 0.4);
-		z-index: -1;
-	}
+	/*.project:before {*/
+	/*	position: absolute;*/
+	/*	inset: 0;*/
+	/*	content: '';*/
+	/*	background: rgba(0, 0, 0, 0.4);*/
+	/*	z-index: -1;*/
+	/*}*/
 	
 	/*.project:not(.selected) {*/
 	/*	opacity: 30%;*/
@@ -144,9 +180,9 @@
 	
 	button.glass {
 		appearance: none;
-		all: unset;
 		position: relative;
-		padding: 1rem 2rem;
+		border: none;
+		padding: 1.25rem 2rem;
 		background: rgba(255, 255, 255, 0.05);
 		backdrop-filter: blur(4px);
 		color: white;
@@ -196,6 +232,7 @@
 		
 	}
 	
+	
 	/*button.common:hover {*/
 	/*	transform: scale(1.05);*/
 	/*}*/
@@ -239,14 +276,11 @@
 	
 	.project-hero {
 		inset: 0;
-		/*object-fit: cover;*/
-		/*max-width: 100%;*/
 		height: 100%;
 		object-fit: cover;
 		width: 100%;
-		opacity: 0.7;
-		
-		/*z-index: -2;*/
+		filter: brightness(0.7);
+		border-radius: 32px;
 		
 	}
 	
