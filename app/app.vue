@@ -400,7 +400,7 @@
 						<a href="https://www.youtube.com/watch?v=sXRAtBX5HRw">https://www.youtube.com/watch?v=sXRAtBX5HRw</a>. Turn on volume!
 						I'm rendering more frames right now...
 						<br><br>
-						With more time I would've added more camera angles, I think the animation is cool but
+						With more time I would've added more camera angles. I think the animation is cool but
 						a little hard to understand what's happening without some different angles.
 						
 					</span>
