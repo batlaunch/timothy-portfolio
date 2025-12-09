@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import PageView from '~/components/common/PageView.vue'
-	import MainView from '~/components/home/MainView.vue'
 	import PageImage from '~/components/common/PageImage.vue'
 	import PageSection from '~/components/common/PageSection.vue'
 	import PageVideo from '~/components/common/PageVideo.vue'
@@ -37,6 +36,8 @@
 	import BallSceneImage from '~/images/proj3/scene.png'
 	import BallLightingImage from '~/images/proj3/lighting.png'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
+	import HeaderView from '~/components/home/HeaderView.vue'
+	import ProjectList from '~/components/home/ProjectList.vue'
 	
 	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
 	import RubeCamera from '~/images/proj4/camera.png'
@@ -56,6 +57,8 @@
 </script>
 
 <template>
+	<HeaderView/>
+	<ProjectList/>
 	<Transition>
 		<KeepAlive>
 			<MainView v-if="!store.currentProject"/>
@@ -418,7 +421,7 @@
 
 <style scoped>
 	.v-enter-active {
-		transition: 250ms 250ms;
+		transition: 250ms;
 		position: absolute;
 		inset: 0;
 	}
@@ -433,7 +436,7 @@
 	.v-leave-to {
 		transform: scale(0.9);
 		opacity: 0;
-		
+
 	}
 
 </style>
@@ -456,6 +459,7 @@
 	}
 	
 	body {
+	
 	}
 	
 	html {
@@ -464,7 +468,12 @@
 	}
 	
 	button {
-		font-family: 'Inter'
+		font-family: 'Inter';
+		transition: transform 300ms;
+	}
+	
+	button:hover {
+		transform: scale(1.1);
 	}
 	
 	#gradient {
