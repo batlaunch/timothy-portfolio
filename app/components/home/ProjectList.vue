@@ -4,9 +4,11 @@
 	import EarthVideo from '~/images/proj1/solar_export.mp4'
 	import ChestVideo from '~/images/proj2/chest.mp4'
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
+	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
+	import DominoVideo from '~/images/proj5/export1.mp4'
 	
 	const projectListEl = useTemplateRef('mainEl')
-
+	
 	const selectedIndex = ref(0)
 	
 	onMounted(() => {
@@ -23,7 +25,7 @@
 			// Optional: Configure observer options
 			// root: document.getElementById('main'), // defaults to the viewport
 			// rootMargin: '-10% 0%', // no margin around the root
-			threshold: 0.2 // trigger when 50% of the element is visible
+			threshold: 0.1 // trigger when 50% of the element is visible
 		})
 		
 		for (const element of elements) {
@@ -35,44 +37,51 @@
 	const colors = {
 		earth: ['#366a32', '#3f89ff'],
 		chest: ['#ffb04c', '#ff5c3b'],
-		ball: ['#6656f7', '#4177ff']
+		ball: ['#6656f7', '#4177ff'],
+		rube: ['#fd4755', '#4177ff'],
+		domino: ['#da734e', '#da4359']
 	}
 
 </script>
 
 <template>
 	<main id="main" ref="mainEl">
-		<ProjectListItemView name="planet-animation" :image-src="EarthVideo" :selected="selectedIndex === 0" :colors="colors.earth">
+		<ProjectListItemView name="planet-animation" :image-src="EarthVideo" :selected="selectedIndex === 0"
+							 :colors="colors.earth">
 			Planet Animation
 			<template #details>
 				Project 1
 			</template>
 		</ProjectListItemView>
-		<ProjectListItemView name="treasure-chest" :image-src="ChestVideo" :selected="selectedIndex === 1" :colors="colors.chest">
+		<ProjectListItemView name="treasure-chest" :image-src="ChestVideo" :selected="selectedIndex === 1"
+							 :colors="colors.chest">
 			Treasure Chest
 			<template #details>
 				Project 2
 			</template>
 		</ProjectListItemView>
-		<ProjectListItemView name="ball-animation" :image-src="BallVideo" :selected="selectedIndex === 2" :colors="colors.ball">
+		<ProjectListItemView name="ball-animation" :image-src="BallVideo" :selected="selectedIndex === 2"
+							 :colors="colors.ball">
 			Ball Animation
 			<template #details>
 				Project 3
 			</template>
 		</ProjectListItemView>
-		<ProjectListItemView name="rube-goldberg" :image-src="RubeVideo" :selected="selectedIndex === 3">
+		<ProjectListItemView name="rube-goldberg" :image-src="RubeVideo" :selected="selectedIndex === 3"
+							 :colors="colors.rube">
 			Rube Goldberg
 			<template #details>
 				Project 4
 			</template>
 		</ProjectListItemView>
-		<ProjectListItemView name="dominoes" :image-src="DominoVideo" :selected="selectedIndex === 4">
+		<ProjectListItemView name="dominoes" :image-src="DominoVideo" :selected="selectedIndex === 4"
+							 :colors="colors.domino">
 			Dominoes
 			<template #details>
 				Project 5
 			</template>
 		</ProjectListItemView>
-	</div>
+	</main>
 
 
 </template>
