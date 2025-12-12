@@ -126,4 +126,27 @@
 		align-items: center;
 		justify-content: center;
 	}
+	
+	/*.page-view:before, .page-view:after  {*/
+	/*	position: fixed;*/
+	/*	pointer-events: none;*/
+	/*	content: '';*/
+	/*	top: 0;*/
+	/*	!*left: 600px;*!*/
+	/*	right: -100px;*/
+	/*	!*height: 400px;*!*/
+	/*	bottom: 0;*/
+	/*	width: 200px;*/
+	/*	background: red;*/
+	/*	border-radius: 100% 100%;*/
+	/*	z-index: -2;*/
+	/*	filter: blur(200px);*/
+	/*	opacity: 0.3;*/
+	/*}*/
+	
+	/*.page-view:after {*/
+	/*	right: unset;*/
+	/*	left: 0;*/
+	/*	background: orange;*/
+	/*}*/
 </style>

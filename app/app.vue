@@ -60,10 +60,8 @@
 	<HeaderView/>
 	<ProjectList/>
 	<Transition>
-		<KeepAlive>
-			<MainView v-if="!store.currentProject"/>
-			
-			<PageView v-else-if="store.currentProject === 'planet-animation'">
+		
+			<PageView v-if="store.currentProject === 'planet-animation'">
 				<template #project>Project 1</template>
 				<template #title>Planet Animation</template>
 				<template #date>September 16, 2025</template>
@@ -412,7 +410,6 @@
 			
 			</PageView>
 		
-		</KeepAlive>
 	
 	
 	</Transition>

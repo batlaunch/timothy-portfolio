@@ -98,7 +98,7 @@
 	}
 	.video-container:before {
 		position: absolute;
-		z-index: -3;
+		z-index: -2;
 		inset: 40px;
 		filter: blur(100px);
 		opacity: 0.6;
@@ -110,8 +110,14 @@
 		
 	}
 	
-	.selected .video-container:before {
-	
+	@media screen and (max-width: 600px) {
+		.video-container {
+			inset: 0;
+		}
+		
+		.selected .project-hero {
+			border-radius: 0 !important;
+		}
 	}
 	
 	.project:not(.selected) .video-container:before {
@@ -203,6 +209,7 @@
 			inset -4px -4px 8px rgba(255, 184, 113, 0.2),
 			inset 0px 0px 24px rgba(255, 87, 0, 0.2),
 			0 8px 32px 0 rgba(255, 140, 46, 0.2);
+		
 		
 	}
 	
