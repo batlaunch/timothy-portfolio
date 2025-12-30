@@ -6,6 +6,7 @@
 	import BallVideo from '~/images/proj3/ball_animation_sound_1.mp4'
 	import RubeVideo from '~/images/proj4/rube_goldberg_final_1.mp4'
 	import DominoVideo from '~/images/proj5/export1.mp4'
+	import FinalVideo from '~/images/final_project/final_wide.mp4'
 	
 	const projectListEl = useTemplateRef('mainEl')
 	
@@ -39,7 +40,8 @@
 		chest: ['#ffb04c', '#ff5c3b'],
 		ball: ['#6656f7', '#4177ff'],
 		rube: ['#fd4755', '#4177ff'],
-		domino: ['#da734e', '#da4359']
+		domino: ['#da734e', '#da4359'],
+		final: ['#b48a4a', '#529349'],
 	}
 
 </script>
@@ -79,6 +81,13 @@
 			Dominoes
 			<template #details>
 				Project 5
+			</template>
+		</ProjectListItemView>
+		<ProjectListItemView name="final" :image-src="FinalVideo" :selected="selectedIndex === 5"
+							 :colors="colors.final">
+			The Pattern
+			<template #details>
+				Final Project
 			</template>
 		</ProjectListItemView>
 	</main>

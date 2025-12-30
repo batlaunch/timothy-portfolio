@@ -51,6 +51,17 @@
 	import DominoPlayblastCamera from '~/images/proj5/playblast_camera.mp4'
 	import DominoExport from '~/images/proj5/export1.mp4'
 	
+	
+	import FinalStoryboard from '~/images/final_project/storyboard.jpg'
+	import FinalEnvironment from '~/images/final_project/environment.png'
+	import FinalTent from '~/images/final_project/tent.png'
+	import FinalFavela from '~/images/final_project/favela.png'
+	import FinalIndustrial from '~/images/final_project/industrial.png'
+	import FinalCity from '~/images/final_project/city.png'
+	import FinalLighting from '~/images/final_project/lighting.jpg'
+	import FinalVideo from '~/images/final_project/final_wide.mp4'
+	
+	
 	const store = useStore()
 
 
@@ -408,6 +419,88 @@
 					<PageVideo :video-src="DominoExport"/>
 				</PageSection>
 			
+			</PageView>
+			<PageView v-else-if="store.currentProject === 'final'">
+				<template #title>The Pattern</template>
+				<template #project>Final Project</template>
+				<PageSection>
+					<template #title>Storyboard</template>
+					My idea was to show the progression of a civilization from nature,
+					then a first settlement, then factories, then a city, then war and
+					total destruction, and finally back to nature again. The idea is
+					we build these large civilizations from scratch then end up killing
+					ourselves with our own technology.
+					<PageImage :image-src="FinalStoryboard"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Environment</template>
+					In this project, I mainly focused on the environment. I started with
+					the foreground elements, which included a hill with some grass. I learned
+					how to model mainly using the sculpt tool to make a small hill. I found some
+					grass models online and created a Bifrost network to replicate the grass
+					variations on the hill mesh. I actually had to redo this in MASH (which I
+					avoided because Bifrost looked like it had some performance benefits) because
+					the lab machines didn't have the plugin installed.
+					<br><br>
+					For the main landscape, I used the same method as with the small hill, which meant
+					creating a large, heavily subdivided rectangle and modeling it with the sculpt tool.
+					I sculpted the general shape of the landscape with a regular brush, then I added
+					texture with a pattern brush. I also created an indent for a stream, which I filled
+					in using the sweep mesh tool on a path. I also added a few trees which I found online.
+					<br><br>
+					Originally, I tried to make mountains myself, but I couldn't get them to look good. I
+					searched online instead and found some that I liked and fit my environment well. These
+					actually weren't models, rather a set of deformer maps with texture maps, so I applied
+					the deformer maps some subdivided rectangles. I modified the maps manually a bit so
+					they flattened out at the base and matched the rest of my landscape.
+					<PageImage :image-src="FinalEnvironment"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Modeling</template>
+					For each scene in my animation I created separate models for the civilization.
+					<br><br>
+					I modeled the tent myself. I made the frame from a few rectangles. For the fabric,
+					I applied a bend deformer to a subdivided rectangle, then used the sculpt tool to
+					give it a fabric look. I staked the fabric with a few rectangles. For the fire,
+					I found log models online and created an area light for the fire. Overall, I was really
+					happy with how the tent turned out. Although it was simple and easy to make, I think
+					it looked good and stylistically fit well with my scene.
+					<PageImage :image-src="FinalTent"/>
+					I also modeled this set of favela-like buildings myself. I created scaled cubes with holes
+					for windows, then stacked them and added roofs and poles for support. I also lit the buildings
+					from the inside. This turned out decent,
+					however with more time I would've added more details such as exterior props, more variation
+					and detail to the buildings, and maybe a central plaza.
+					<PageImage :image-src="FinalFavela"/>
+					I did not model the industrial buildings myself. I found some low-poly models with textures,
+					which was perfect for what I needed. I did, however, add window lighting to these buildings
+					in my main scene using area lights reflected off the (non-transparent) windows.
+					<PageImage :image-src="FinalIndustrial"/>
+					I found a model for the city online. I redid the neon lighting and modified the layout some,
+					but beyond that I kept the models the same.
+					<PageImage :image-src="FinalCity"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Lighting</template>
+					I went through a few iterations of lighting. I started with a physical sky (which is just
+					a skydome with a texture). It looked horrible. I realized I needed some atmosphere.
+					For some reason, skydomes don't work with Arnold atmospheres, so I switched to using
+					area lights. The lighting looked much better with the atmosphere. For some of the scenes where
+					I still wanted a blue sky, such as the nature scene, I used a combination of a skydome with
+					the area lights to I had both a blue sky and an atmosphere.
+					<PageImage :image-src="FinalLighting"/>
+				</PageSection>
+				<PageSection>
+					<template #title>Final render</template>
+					I didn't quite get to finish my render. I couldn't finish the project during finals season
+					and I can't render at home because remote rendering on the lab machines isn't available
+					and it would take days per scene on my laptop without a GPU.
+					<br><br>
+					I added some camera dolly, but it was far too slow and isn't noticeable. If I had rendered
+					again I would've increased the dolly speed which would've made this much more cinematic in my
+					opinion.
+					<PageVideo :video-src="FinalVideo"/>
+				</PageSection>
 			</PageView>
 		
 	

@@ -26,9 +26,7 @@
 
 					</div>
 					<div class="header-side">
-						<button class="exit-button" @click="store.currentProject = null">
-							<CloseIcon/>
-						</button>
+					
 					</div>
 					
 				</div>
@@ -38,11 +36,13 @@
 			
 
 		</div>
+		<button class="exit-button" @click="store.currentProject = null">
+			<CloseIcon/>
+		</button>
 		
 
 		
 		
-		<!--	  <div id="gradient"></div>-->
 	</section>
 
 </template>
@@ -115,13 +115,15 @@
 		border: none;
 		border-radius: 100%;
 		background: var(--border-color);
+		/*background: none;*/
 		color: var(--neutral-color);
-		width: 48px;
-		height: 48px;
+		/*opacity: 0.6;*/
+		width: 40px;
+		height: 40px;
 		cursor: pointer;
-		/*position: absolute;*/
-		right: 0;
-		top: 64px;
+		position: fixed;
+		right: 24px;
+		top: 24px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
