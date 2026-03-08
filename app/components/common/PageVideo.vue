@@ -2,7 +2,10 @@
 	import PauseIcon from '~/components/common/icons/PauseIcon.vue'
 	import PlayIcon from '~/components/common/icons/PlayIcon.vue'
 	
-	const props = defineProps(['videoSrc', 'loop'])
+	const props = defineProps<{
+		videoSrc: string,
+		loop?: boolean
+	}>()
 	
 	const video = useTemplateRef('video')
 	

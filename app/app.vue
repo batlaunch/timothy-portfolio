@@ -76,6 +76,8 @@
 				<template #project>Project 1</template>
 				<template #title>Planet Animation</template>
 				<template #date>September 16, 2025</template>
+				<PageImage :image-src="EarthStill"/>
+				<PageVideo :video-src="EarthVideo"/>
 				
 				<PageSection>
 					<template #title>Original Animation</template>
@@ -134,6 +136,8 @@
 				<template #project>Project 2</template>
 				<template #title>Treasure Chest</template>
 				<template #date>October 16, 2025</template>
+				<PageVideo :video-src="TreasureVideo"/>
+				<PageImage :image-src="TreasureImage"/>
 				
 				<PageSection>
 					<template #title>Reference Image</template>
@@ -182,6 +186,7 @@
 				<template #project>Project 3</template>
 				<template #title>Ball Animation</template>
 				<template #date>October 16, 2025</template>
+				<PageVideo :video-src="BallVideo"/>
 				
 				<PageSection>
 					<template #title>Inspiration</template>
@@ -258,6 +263,8 @@
 			<PageView v-else-if="store.currentProject=='rube-goldberg'">
 				<template #title>Rube Goldberg</template>
 				<template #project>Project 4</template>
+				<PageVideo :video-src="RubeVideo" loop/>
+				
 				<PageSection>
 					<template #title>Animating</template>
 					I simulated almost everything in this animation, with a few exceptions. Using Bullet, I created static rigid bodies for the ball to
@@ -316,6 +323,8 @@
 			<PageView v-else-if="store.currentProject=='dominoes'">
 				<template #title>Dominoes</template>
 				<template #project>Project 5</template>
+				<PageVideo :video-src="DominoExport"/>
+				
 				<PageSection>
 					My idea was to create a video using the dots, or pips, on the dominoes, as they are falling. I wanted a 3d grid of dominoes, with the Y axis
 					representing the Y in the video, the Z axis representing the X in the video, and the X axis representing the current frame. The dominoes fall
@@ -423,6 +432,8 @@
 			<PageView v-else-if="store.currentProject === 'final'">
 				<template #title>The Pattern</template>
 				<template #project>Final Project</template>
+				<PageVideo :video-src="FinalVideo"/>
+				
 				<PageSection>
 					<template #title>Storyboard</template>
 					My idea was to show the progression of a civilization from nature,
